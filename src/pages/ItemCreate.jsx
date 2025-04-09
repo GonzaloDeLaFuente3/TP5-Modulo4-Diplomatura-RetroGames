@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 import { ItemContext } from '../contexts/ItemContext';
 
 const ItemCreate = () => {
-  const {createItem} = useContext(ItemContext);
-  const [formData, setFormData] = useState({
+  const {createItem} = useContext(ItemContext);//Acceso a la función de crear un nuevo juego
+  const [formData, setFormData] = useState({//Estado para almacenar los datos del formulario
     title: '',
     release_year: '',
     platform: '',
@@ -18,19 +18,21 @@ const ItemCreate = () => {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {//Función para manejar los cambios en los campos del formulario
+    setFormData({ ...formData, [e.target.name]: e.target.value });//Actualizar el estado con los nuevos valores.Actualizo solo el campo modificado.
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createItem(formData);
+  const handleSubmit = async (e) => {//Función para manejar el envío del formulario
+    e.preventDefault();//Prevenir el comportamiento predeterminado del formulario
+    await createItem(formData);//Crear un nuevo juego utilizando la función de contexto
     navigate('/items');
   };
 
   return (
     <div className="container mx-auto p-6 py-8">
+      {/* Titulo */}
       <h1 className="text-4xl font-bold mb-6 text-center text-black">Crear Nuevo Juego</h1>
+      {/* Formulario */}
       <form onSubmit={handleSubmit} className="bg-blue-100  p-8 rounded-lg shadow-lg max-w-2xl mx-auto space-y-6">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Título</label>
@@ -44,6 +46,7 @@ const ItemCreate = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Año de Lanzamiento</label>
           <input
@@ -56,6 +59,7 @@ const ItemCreate = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Plataforma</label>
           <input
@@ -68,6 +72,7 @@ const ItemCreate = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Género</label>
           <input
@@ -80,6 +85,7 @@ const ItemCreate = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">URL de la Portada</label>
           <input
@@ -92,6 +98,7 @@ const ItemCreate = () => {
             required
           />
         </div>
+        {/* Boton */}
         <div className="flex justify-center space-x-4">
           <button
             type="submit"

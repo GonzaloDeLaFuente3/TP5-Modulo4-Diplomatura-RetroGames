@@ -6,8 +6,8 @@ import { ItemContext } from '../contexts/ItemContext';
 import { toast } from 'react-toastify';
 
 const ItemEdit = () => {
-  const {updateItem, items } = useContext(ItemContext);
-  const [formData, setFormData] = useState({
+  const {updateItem, items } = useContext(ItemContext);//funcion para actualizar juego y todos los juegos 
+  const [formData, setFormData] = useState({//formulario que guarda los datos del juego a editar 
     title: '',
     release_year: '',
     platform: '',
@@ -15,33 +15,35 @@ const ItemEdit = () => {
     cover_url: '',
   });
 
-  const { id } = useParams();
+  const { id } = useParams();//extraigo el id del juego desde la url
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (items.length > 0) {
-      const item = items.find(item => item.id === id);
-      if (item) {
-        setFormData(item);
+    if (items.length > 0) {//si hay juegos en el contexto
+      const item = items.find(item => item.id === id);//busco el juego que quiero editar
+      if (item) {//si el juego existe
+        setFormData(item);//seteo el formulario con los datos del juego
       } else {
         toast.error('Juego no encontrado');
       }
     }
   }, [id, items]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) => {//funcion para manejar el cambio de los inputs del formulario
+    setFormData({ ...formData, [e.target.name]: e.target.value });//seteo el formulario con los datos del input que cambio
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {//funcion para manejar el submit del formulario
     e.preventDefault();
-    await updateItem({ ...formData, id });
+    await updateItem({ ...formData, id });//actualizo el juego con los datos del formulario y el id del juego
     navigate('/items');
   };
 
   return (
     <div className="container mx-auto p-6 py-8">
+      {/* Titulo */}
       <h1 className="text-4xl font-bold mb-6 text-center text-black">Editar Juego</h1>
+      {/* Formulario */}
       <form onSubmit={handleSubmit} className="bg-blue-100  p-8 rounded-lg shadow-lg max-w-2xl mx-auto space-y-6">
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">Título</label>

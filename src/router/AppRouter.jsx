@@ -9,9 +9,9 @@ import Header from '../components/Header';
 
 const AppRouter = () => {
   return (
-    <Router>
+    <Router>{/* El proveedor del contexto de enrutamiento */}
       <Header />
-      <Routes>
+      <Routes>{/* Agrupa todas las rutas */}
         <Route path="/" element={<ItemList />} />
         <Route path="/items" element={<ItemList />} />
         <Route path="/items/:id" element={<ItemDetail />} />

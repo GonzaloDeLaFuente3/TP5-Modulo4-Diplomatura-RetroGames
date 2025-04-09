@@ -9,9 +9,9 @@ import Footer from './components/Footer';
 
 const App = () => {
   return (
-    <ItemProvider>
+    <ItemProvider> {/* Contexto que envuelve todo para que los componentes hijos puedan consumir los datos del contexto. */}
       
-      <AppRouter />
+      <AppRouter /> {/* Controla qué vista se muestra según la ruta actual. */}
       <Footer />
       <ToastContainer />
       

@@ -6,40 +6,40 @@ import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export const ItemContext = createContext();
+export const ItemContext = createContext(); // Creo el Contexto para compartir datos entre componentes
 
-export const ItemProvider = ({ children }) => {
-  const [items, setItems] = useState([]);
+export const ItemProvider = ({ children }) => {// Proveedor del contexto
+  const [items, setItems] = useState([]);// Estado para almacenar los juegos
 
   const apiURL = 'https://67f434cecbef97f40d2db18a.mockapi.io/api/v1/game';
 
-  useEffect(() => {
+  useEffect(() => {// Efecto para cargar los juegos al iniciar la aplicación
     fetchItems();
   }, []);
 
-  const fetchItems = async () => {
+  const fetchItems = async () => {// Función para obtener los juegos desde la API
     try {
-      const response = await axios.get(apiURL);
-      setItems(response.data);
+      const response = await axios.get(apiURL);// Realiza la solicitud GET a la API
+      setItems(response.data);// Actualiza el estado con los datos obtenidos
     } catch (error) {
       toast.error('Error al cargar los juegos');
     }
   };
 
-  const createItem = async (newItem) => {
+  const createItem = async (newItem) => {// Función para crear un nuevo juego
     try {
       const response = await axios.post(apiURL, newItem);
-      setItems([...items, response.data]);
+      setItems([...items, response.data]);// Actualiza el estado con el nuevo juego
       toast.success('Juego creado exitosamente');
     } catch (error) {
       toast.error('Error al crear el juego');
     }
   };
 
-  const updateItem = async (updatedItem) => {
+  const updateItem = async (updatedItem) => {// Función para actualizar un juego existente
     try {
       const response = await axios.put(`${apiURL}/${updatedItem.id}`, updatedItem);
-      setItems(items.map(item => item.id === updatedItem.id ? response.data : item));
+      setItems(items.map(item => item.id === updatedItem.id ? response.data : item));// Actualiza el estado con el juego actualizado.lo reemplazo con response.data 
       toast.success('Juego actualizado exitosamente');
     } catch (error) {
       toast.error('Error al actualizar el juego');
@@ -49,7 +49,7 @@ export const ItemProvider = ({ children }) => {
   const deleteItem = async (id) => {
     try {
       await axios.delete(`${apiURL}/${id}`);
-      setItems(items.filter(item => item.id !== id));
+      setItems(items.filter(item => item.id !== id));// Elimina el juego del estado. Filtra los juegos y elimina el que coincide con el id
       toast.success('Juego eliminado exitosamente');
     } catch (error) {
       toast.error('Error al eliminar el juego');
@@ -57,8 +57,8 @@ export const ItemProvider = ({ children }) => {
   };
 
   return (
-    <ItemContext.Provider value={{ items, createItem, updateItem, deleteItem, fetchItems }}>
-      {children}
+    <ItemContext.Provider value={{ items, createItem, updateItem, deleteItem, fetchItems }}>{/* // Proporciona el contexto a los componentes hijos */}
+      {children}{/* // Renderiza los componentes hijos */}
     </ItemContext.Provider>
   );
 };

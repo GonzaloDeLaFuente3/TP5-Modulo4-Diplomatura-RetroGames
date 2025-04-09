@@ -7,14 +7,14 @@ import Loader from '../components/Loader';
 import { ItemContext } from '../contexts/ItemContext';
 
 const ItemDetail = () => {
-  const { items, deleteItem } = useContext(ItemContext);
-  const { id } = useParams();
+  const { items, deleteItem } = useContext(ItemContext);//Acceso a la lista de juegos y la función de eliminar
+  const { id } = useParams();//Acceso a los parámetros de la URL
   const navigate = useNavigate();
 
-  const item = items.find(item => item.id === id);
+  const item = items.find(item => item.id === id);//Buscar el juego por ID en la lista de juegos
 
-  const handleDelete = () => {
-    Swal.fire({
+  const handleDelete = () => {//Función para manejar la eliminación del juego
+    Swal.fire({//Mostrar una alerta de confirmación
       title: '¿Estás seguro?',
       text: 'No podrás revertir esto',
       icon: 'warning',
@@ -24,18 +24,19 @@ const ItemDetail = () => {
       confirmButtonText: 'Sí, eliminar',
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteItem(id);
-        navigate('/items');
+        await deleteItem(id);//Eliminar el juego
+        navigate('/items');//Redirigir a la lista de juegos
       }
     });
   };
 
-  if (!item) {
+  if (!item) {// se muestra el loader hasta que cargue el juego
     return <Loader />;
   }
 
   return (
     <div className="container mx-auto p-4 py-8">
+      {/* Titulo */}
       <h1 className="text-3xl font-bold mb-4 text-center text-black animate-fade-in-down">
         Detalles del Juego
       </h1>
@@ -50,9 +51,8 @@ const ItemDetail = () => {
           <p className="text-gray-700 mb-1">Plataforma: {item.platform}</p>
           <p className="text-gray-700 mb-1">Género: {item.genre}</p>
           <p className="text-gray-700 mb-4">Año de Lanzamiento: {item.release_year}</p>
-
         </div>
-        
+        {/* Botones */}
         <div className="flex justify-center space-x-4">
           <button
             onClick={() => navigate(`/items/${item.id}/edit`)}
