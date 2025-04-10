@@ -10,6 +10,7 @@ export const ItemContext = createContext(); // Creo el Contexto para compartir d
 
 export const ItemProvider = ({ children }) => {// Proveedor del contexto
   const [items, setItems] = useState([]);// Estado para almacenar los juegos
+  const [loading, setLoading] = useState(true); // Estado para controlar la carga
 
   const apiURL = 'https://67f434cecbef97f40d2db18a.mockapi.io/api/v1/game';
 
@@ -18,11 +19,14 @@ export const ItemProvider = ({ children }) => {// Proveedor del contexto
   }, []);
 
   const fetchItems = async () => {// Función para obtener los juegos desde la API
+    setLoading(true); // Activa el loader antes de la solicitud
     try {
       const response = await axios.get(apiURL);// Realiza la solicitud GET a la API
       setItems(response.data);// Actualiza el estado con los datos obtenidos
     } catch (error) {
       toast.error('Error al cargar los juegos');
+    }finally {
+      setLoading(false); // Desactiva el loader después de la solicitud
     }
   };
 
@@ -57,7 +61,7 @@ export const ItemProvider = ({ children }) => {// Proveedor del contexto
   };
 
   return (
-    <ItemContext.Provider value={{ items, createItem, updateItem, deleteItem, fetchItems }}>{/* // Proporciona el contexto a los componentes hijos */}
+    <ItemContext.Provider value={{ items, createItem, updateItem, deleteItem, fetchItems, loading  }}>{/* // Proporciona el contexto a los componentes hijos */}
       {children}{/* // Renderiza los componentes hijos */}
     </ItemContext.Provider>
   );
