@@ -35,6 +35,25 @@ const ItemEdit = () => {
 
   const handleSubmit = async (e) => {//funcion para manejar el submit del formulario
     e.preventDefault();
+
+    // Validaciones personalizadas
+    if (!formData.title.trim()) {
+      toast.error('El título es obligatorio');
+      return;
+    }
+
+    const year = parseInt(formData.release_year, 10);
+    if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+      toast.error('El año de lanzamiento debe ser un número válido entre 1900 y el año actual');
+      return;
+    }
+
+    const urlPattern = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    if (!urlPattern.test(formData.cover_url.trim())) {
+      toast.error('La URL de la portada no es válida');
+      return;
+    }
+
     await updateItem({ ...formData, id });//actualizo el juego con los datos del formulario y el id del juego
     navigate('/items');
   };
@@ -55,6 +74,8 @@ const ItemEdit = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            minLength="3"
+            maxLength="100"
           />
         </div>
         <div className="mb-4">
@@ -67,6 +88,8 @@ const ItemEdit = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            min="1900"
+            max={new Date().getFullYear()}
           />
         </div>
         <div className="mb-4">
@@ -79,6 +102,8 @@ const ItemEdit = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            minLength="2"
+            maxLength="50"
           />
         </div>
         <div className="mb-4">
@@ -91,6 +116,8 @@ const ItemEdit = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
+            minLength="2"
+            maxLength="50"
           />
         </div>
         <div className="mb-4">

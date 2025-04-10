@@ -10,15 +10,13 @@ const ItemList = () => {
   return (
     <div className="container mx-auto p-4 py-8 bg-blue-50">
       <h1 className="text-3xl font-bold mb-4 text-center">Lista de Juegos Retro</h1>
-      {items.length === 0 ? (
-          <p className="text-center text-gray-500">No hay juegos disponibles.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {items.map((item) => (// Mapeo de los juegos para crear una tarjeta por cada uno
-              <ItemCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {items.map((item) => (// Mapeo de los juegos para crear una tarjeta por cada uno
+          <ItemCard key={item.id} item={item} />
+        ))}
+      </div>
+        
     </div>
   );
 };
